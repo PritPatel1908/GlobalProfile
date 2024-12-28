@@ -101,9 +101,9 @@
                 $EMP_QR_UPLOAD_PATH = config('constants.EMP_QR_UPLOAD_PATH');
                 $qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
                 ?>
-                <img src="<?php echo $qrcode; ?>">                
+                <img src="<?php echo $qrcode; ?>">
             </div>
-        </div>      
+        </div>
 
     </div>
 
@@ -141,7 +141,7 @@
                         <div class="profile-info-name"> Employer Name </div>
 
                         <div class="profile-info-value">
-                            <span> {{ $employee->employer_name }}</span>
+                            <span> {{ $employee->employee_name }}</span>
                         </div>
                     </div>
 

@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Logout;
 use App\Http\Controllers\Employee;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
     return Redirect::to('login');
 });
 
-Route::get('/clear', function() {
+Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:cache');
     Artisan::call('config:cache');
@@ -37,8 +38,8 @@ Route::resource('logout', Logout::class);
 //Route::get('/', 'Login@index');
 //Route::post('/store', 'Login@store');
 
- // Middleware for check admin login authentication
-    Route::group(['middleware' => 'admin_auth'], function () {
-Route::resource('employee', Employee::class);
-Route::get('/employee/view/{emp_id}', [Employee::class, 'GetByEmpId'])->name('employee.GetByEmpId');
+// Middleware for check admin login authentication
+Route::group(['middleware' => 'admin_auth'], function () {
+    Route::resource('employee', Employee::class);
+    Route::get('/employee/view/{emp_id}', [Employee::class, 'GetByEmpId'])->name('employee.GetByEmpId');
 });

@@ -53,11 +53,11 @@
                 <input type="email" name="email" class="form-control" placeholder="Email" required value="<?php echo $employee->email; ?>">
             </div>
         </div>
-        
+
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
                 <strong>Current Employer Name <span style="color: red;">*</span></strong>
-                <input type="text" name="employer_name" class="form-control" placeholder="Current Employer Name" required value="<?php echo $employee->employer_name; ?>">
+                <input type="text" name="employee_name" class="form-control" placeholder="Current Employer Name" required value="<?php echo $employee->employee_name; ?>">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
