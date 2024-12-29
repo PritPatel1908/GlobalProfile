@@ -91,11 +91,12 @@
     <div class="col-md-3">
         <div class="profile-sidebar">
             <div class="profile-userpic text-center">
-                <img src="{{ asset('uploads/images/'.$employee->emp_image) }}">
+                <img src="{{ asset('storage/uploads/images/' . $employee->emp_image) }}">
             </div>
         </div>
 
-        <div class="profile-sidebar">
+        <!-- TODO: remove comment after add qr code -->
+        <!-- <div class="profile-sidebar">
             <div class="profile-userpic text-center">
                 <?php
                 $EMP_QR_UPLOAD_PATH = config('constants.EMP_QR_UPLOAD_PATH');
@@ -103,7 +104,7 @@
                 ?>
                 <img src="<?php echo $qrcode; ?>">
             </div>
-        </div>
+        </div> -->
 
     </div>
 
@@ -157,6 +158,32 @@
 
                         <div class="profile-info-value">
                             <span> {{ $employee->contact_number }}</span>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Company Name </div>
+
+                        <div class="profile-info-value">
+                            @if ($employee->company_name !== null && count($employee->company_name) > 1) 
+                                <span>
+                                    {{ implode(', ', $employee->company_name) }}
+                                </span>
+                            @else
+                                <span>{{ $employee->company_name }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Company Employee Code </div>
+
+                        <div class="profile-info-value">
+                            @if ($employee->company_employee_code !== null && count($employee->company_employee_code) > 1) 
+                                <span>
+                                    {{ implode(', ', $employee->company_employee_code) }}
+                                </span>
+                            @else
+                                <span>{{ $employee->company_employee_code }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="profile-info-row">

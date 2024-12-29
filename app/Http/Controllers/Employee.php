@@ -63,13 +63,12 @@ class Employee extends Controller
             'address' => 'required|string',
             'card_date_of_issue' => 'required|date',
             'card_valid_till' => 'required|date',
+            'company_name.*' => 'required|string',
+            'company_employee_code.*' => 'required|string',
         ]);
 
         try {
-            // $data = $request->all();
-            // $data['emp_image'] = $this->uploadImage($request, 'emp_image');
-            // unset($data['_token']);
-            // $employee = EmployeeModel::create($data);
+            unset($data['_token']);            
 
             $img = $request->emp_image;
             $folderPath = "public/uploads/images/";
@@ -81,6 +80,19 @@ class Employee extends Controller
             $fileName =  $request->employee_code . '.png';
             $file = $folderPath . $fileName;
             Storage::put($file, $image_base64);
+
+            $companyNames = $request->input('company_name');
+            $companyEmployeeCodes = $request->input('company_employee_code');
+
+            $company_names = [];
+            foreach ($companyNames as $companyName) {
+                $company_names[] = $companyName;
+            }
+
+            $company_employee_codes = [];
+            foreach ($companyEmployeeCodes as $companyEmployeeCode) {
+                $company_employee_codes[] = $companyEmployeeCode;
+            }
 
             $employee = EmployeeModel::create([
                 'emp_id'  =>  $request->emp_id,
@@ -97,7 +109,9 @@ class Employee extends Controller
                 'card_date_of_issue' => $request->card_date_of_issue,
                 'card_valid_till' => $request->card_valid_till,
                 'emp_image' => $fileName,
-                'is_deleted' => 0
+                'is_deleted' => 0,
+                'company_name' => $company_names, // Store as JSON
+                'company_employee_code' => $company_employee_codes // Store as JSON
             ]);
 
             // $id = $employee->id;
@@ -157,7 +171,20 @@ class Employee extends Controller
         if ($email_session == "" || empty($email_session)) {
             return redirect('login');
         }
-        return view('employee.edit', compact('employee'));
+
+        $companyNames = $employee->company_name;
+        $companyEmployeeCodes = $employee->company_employee_code;
+
+        $company_names = [];
+        foreach ($companyNames as $companyName) {
+            $company_names[] = $companyName;
+        }
+
+        $company_employee_codes = [];
+        foreach ($companyEmployeeCodes as $companyEmployeeCode) {
+            $company_employee_codes[] = $companyEmployeeCode;
+        }
+        return view('employee.edit', compact(['employee', 'company_names', 'company_employee_codes']));
     }
 
     public function update(Request $request, EmployeeModel $employee)
@@ -174,7 +201,7 @@ class Employee extends Controller
                 'contact_number' => 'required|numeric',
                 'email' => 'required|email',
                 'employee_name' => 'required|string',
-                'employee_code' => 'required|string|unique:employee,employee_code',
+                'employee_code' => 'required|string',
                 'family_contact_number' => 'required|numeric',
                 'gender' => 'required',
                 'dob' => 'required|date',
@@ -182,10 +209,53 @@ class Employee extends Controller
                 'address' => 'required|string',
                 'card_date_of_issue' => 'required|date',
                 'card_valid_till' => 'required|date',
+                'company_name.*' => 'required|string',
+                'company_employee_code.*' => 'required|string',
             ]);
 
-            $data = $request->all();
-            $data['emp_image'] = $this->uploadImage($request, 'emp_image');
+            $img = $request->emp_image;
+            $folderPath = "public/uploads/images/";
+            $image_parts = explode(";base64,", $img);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $rand_code = Str::random(6);
+            $fileName =  $request->employee_code . '.png';
+            $file = $folderPath . $fileName;
+            Storage::put($file, $image_base64);
+
+            $companyNames = $request->input('company_name');
+            $companyEmployeeCodes = $request->input('company_employee_code');
+
+            $company_names = [];
+            foreach ($companyNames as $companyName) {
+                $company_names[] = $companyName;
+            }
+
+            $company_employee_codes = [];
+            foreach ($companyEmployeeCodes as $companyEmployeeCode) {
+                $company_employee_codes[] = $companyEmployeeCode;
+            }
+
+            $data = [
+                'emp_name'  =>  $request->emp_name,
+                'email' =>  $request->email,
+                'employee_name' => $request->employee_name,
+                'employee_code' => $request->employee_code,
+                'contact_number' => $request->contact_number,
+                'family_contact_number' => $request->family_contact_number,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'nationality' => $request->nationality,
+                'address' => $request->address,
+                'card_date_of_issue' => $request->card_date_of_issue,
+                'card_valid_till' => $request->card_valid_till,
+                'emp_image' => $fileName,
+                'is_deleted' => 0,
+                'company_name' => $company_names, // Store as JSON
+                'company_employee_code' => $company_employee_codes // Store as JSON
+            ];
+
             unset($data['_token']);
         } else {
             $request->validate([
@@ -193,7 +263,7 @@ class Employee extends Controller
                 'contact_number' => 'required|numeric',
                 'email' => 'required|email',
                 'employee_name' => 'required|string',
-                'employee_code' => 'required|string|unique:employee,employee_code',
+                'employee_code' => 'required|string',
                 'family_contact_number' => 'required|numeric',
                 'gender' => 'required',
                 'dob' => 'required|date',
@@ -201,8 +271,41 @@ class Employee extends Controller
                 'address' => 'required|string',
                 'card_date_of_issue' => 'required|date',
                 'card_valid_till' => 'required|date',
+                'company_name.*' => 'required|string',
+                'company_employee_code.*' => 'required|string',
             ]);
-            $data = $request->all();
+
+            $companyNames = $request->input('company_name');
+            $companyEmployeeCodes = $request->input('company_employee_code');
+
+            $company_names = [];
+            foreach ($companyNames as $companyName) {
+                $company_names[] = $companyName;
+            }
+
+            $company_employee_codes = [];
+            foreach ($companyEmployeeCodes as $companyEmployeeCode) {
+                $company_employee_codes[] = $companyEmployeeCode;
+            }
+
+            $data = [
+                'emp_name'  =>  $request->emp_name,
+                'email' =>  $request->email,
+                'employee_name' => $request->employee_name,
+                'employee_code' => $request->employee_code,
+                'contact_number' => $request->contact_number,
+                'family_contact_number' => $request->family_contact_number,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'nationality' => $request->nationality,
+                'address' => $request->address,
+                'card_date_of_issue' => $request->card_date_of_issue,
+                'card_valid_till' => $request->card_valid_till,
+                'is_deleted' => 0,
+                'company_name' => $company_names, // Store as JSON
+                'company_employee_code' => $company_employee_codes // Store as JSON
+            ];
+            
             unset($data['_token']);
         }
 

@@ -109,6 +109,28 @@
             color: red;
             font-size: 12px;
         }
+
+        .camera-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            /* margin-bottom: 15px; */
+        }
+
+        .camera-card {
+            background-color: #fefefe; /* Light background */
+            border: 1px solid #e0e0e0; /* Subtle border */
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" /> --}}
@@ -125,7 +147,6 @@
                     <div class="pull-left">
                         <div style="display: flex; align-items: center;">
                             <h2>Add New Employee</h2>
-                            <h4 style="margin-left: 10px; margin-top: 30px">Uniqueue EmpId ({{ $employee_id }})</h4>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-top: 15px;">
@@ -152,7 +173,7 @@
         </div>
         <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
+            <h3 style="margin-left: 10px; margin-top: 30px">Uniqueue EmpId ({{ $employee_id }})</h3><hr/>
             <div class="row">
                 {{-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="form-group">
@@ -210,14 +231,42 @@
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <input type="button" class="btn btn-sm btn-primary" id="open_camera" value ="Open Camera"><br />
-                        <div id="my_camera" class="d-none" style="none"></div>
-                        <br />
-                        <input type="button" id="take_snap" value="Take Snapshot" onClick="take_snapshot()"
-                            class="btn btn-info btn-sm" style="display: none">
-                        <input type="hidden" name="image" class="image-tag">
-                        <div class="col-md-6">
+                        <div class="camera-card">
+                            <div class="button-container">
+                                <input type="button" class="btn btn-sm btn-primary" id="open_camera" value="Open Camera">
+                                <input type="button" style="display: none;" class="btn btn-sm btn-primary" id="close_camera" value="Close Camera" onClick="resetWebcam()">
+                            </div>
+                            <div id="my_camera" class="d-none" style="none"></div>
+                            <div class="button-container">
+                                <input type="button" id="take_snap" value="Take Snapshot" onClick="take_snapshot()" class="btn btn-info btn-sm" style="display: none">
+                                <input type="hidden" name="image" class="image-tag">
+                            </div>
                             <div id="results"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Fields for Company Name and Company Employee Code -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="company-fields">
+                        <div class="company-entry">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <strong>Company Name <span style="color: red;">*</span></strong>
+                                    <input type="text" name="company_name[]" class="form-control" placeholder="Company Name" required>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <strong>Company Employee Code <span style="color: red;">*</span></strong>
+                                    <input type="text" name="company_employee_code[]" class="form-control" placeholder="Company Employee Code" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="">
+                        <div class="form-group">
+                            <button type="button" id="add-company">Add Another Company</button>
                         </div>
                     </div>
                 </div>
@@ -287,6 +336,8 @@
         $("#open_camera").click(function() {
             $("#my_camera").show();
             $("#take_snap").show();
+            $("#close_camera").show();
+            $("#open_camera").hide();
 
             Webcam.set({
                 width: 250,
@@ -304,7 +355,50 @@
                 $(".image-tag").val(data_uri);
                 document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
             });
+            resetWebcam();
+        }
+
+        function resetWebcam() {
+            $("#my_camera").hide();
+            $("#take_snap").hide();
+            $("#close_camera").hide();
+            $("#open_camera").show();
             Webcam.reset();
         }
+    </script>
+
+    <script>
+        document.getElementById('add-company').addEventListener('click', function() {
+            var companyFields = document.getElementById('company-fields');
+            if (companyFields.children.length == 4) {
+                var addBtn = document.getElementById('add-company');
+                addBtn.style.display = 'none';
+            }
+
+            if (companyFields.children.length < 5) {
+                var newEntry = document.createElement('div');
+                newEntry.className = 'company-entry';
+                newEntry.innerHTML = `
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <strong>Company Name <span style="color: red;">*</span></strong>
+                            <input type="text" name="company_name[]" class="form-control" placeholder="Company Name" required>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <strong>Company Employee Code <span style="color: red;">*</span></strong>
+                            <input type="text" name="company_employee_code[]" class="form-control" placeholder="Company Employee Code" required>
+                        </div>
+                    </div>
+                `;
+                companyFields.appendChild(newEntry);
+            } 
+            // else {
+            //     var addBtn = document.getElementById('add-company');
+            //     addBtn.style.display = 'none';
+            //     // alert("You can only add up to 5 companies.");
+            // }
+        });
     </script>
 @endsection

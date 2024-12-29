@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('employee_name', 200)->nullable();
             $table->string('employee_code', 50)->nullable();
             $table->string('family_contact_number', 255)->nullable();
+            $table->json('company_name')->nullable();
+            $table->json('company_employee_code')->nullable();
             $table->string('gender', 255)->nullable();
             $table->date('dob')->nullable();
             $table->string('nationality', 255)->nullable();

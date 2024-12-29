@@ -27,6 +27,13 @@ class EmployeeModel extends Model
         'card_date_of_issue',
         'card_valid_till',
         'is_deleted',
+        'company_name',
+        'company_employee_code',
+    ];
+
+    protected $casts = [
+        'company_name' => 'json',
+        'company_employee_code' => 'json',
     ];
 
     public function scopeActive($query)

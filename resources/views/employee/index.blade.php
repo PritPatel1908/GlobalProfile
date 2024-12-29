@@ -44,13 +44,15 @@
                 <th>No</th>
                 <th>Action</th>
                 <th>Image</th>
-                <th>QR Code</th>
+                <!-- <th>QR Code</th> -->
                 <th>Employee ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Employer Name</th>
                 <th>Employee Code</th>
                 <th>Contact Number</th>
+                <th>Company Name</th>
+                <th>Company Employee Code</th>
                 <th>Family Contact Number</th>
                 <th>Gender</th>
                 <th>DOB</th>
@@ -96,12 +98,13 @@
                         <img src="{{ asset('storage/uploads/images/' . $employee->emp_image) }}">
                     </td>
 
-                    <td>
+                    <!-- TODO: Remove comment after add qucode -->
+                    <!-- <td>
                         <?php
-                        $qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
+                        //$qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
                         ?>
-                        <img src="<?php echo $qrcode; ?>">
-                    </td>
+                        <img src="<?php //echo $qrcode; ?>">
+                    </td> -->
 
                     <td>{{ $employee->emp_id }}</td>
 
@@ -114,6 +117,22 @@
                     <td>{{ $employee->employee_code }}</td>
 
                     <td>{{ $employee->contact_number }}</td>
+
+                    @if ($employee->company_name !== null && count($employee->company_name) > 1) 
+                        <td>
+                            {{ implode(', ', $employee->company_name) }}
+                        </td>
+                    @else
+                        <td>{{ $employee->company_name }}</td>
+                    @endif
+
+                    @if ($employee->company_employee_code !== null && count($employee->company_employee_code) > 1) 
+                        <td>
+                            {{ implode(', ', $employee->company_employee_code) }}
+                        </td>
+                    @else
+                        <td>{{ $employee->company_employee_code }}</td>
+                    @endif
 
                     <td>{{ $employee->family_contact_number }}</td>
 
