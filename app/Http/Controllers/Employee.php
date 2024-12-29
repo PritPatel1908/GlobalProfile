@@ -68,7 +68,7 @@ class Employee extends Controller
         ]);
 
         try {
-            unset($data['_token']);            
+            // unset($data['_token']);            
 
             $img = $request->emp_image;
             $folderPath = "public/uploads/images/";
@@ -194,9 +194,9 @@ class Employee extends Controller
             return redirect('login');
         }
 
-        if ($request->file('emp_image') != "") {
+        // if ($request->file('emp_image') != "") {
             $request->validate([
-                'emp_image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            //     'emp_image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
                 'emp_name' => 'required|string',
                 'contact_number' => 'required|numeric',
                 'email' => 'required|email',
@@ -256,58 +256,58 @@ class Employee extends Controller
                 'company_employee_code' => $company_employee_codes // Store as JSON
             ];
 
-            unset($data['_token']);
-        } else {
-            $request->validate([
-                'emp_name' => 'required|string',
-                'contact_number' => 'required|numeric',
-                'email' => 'required|email',
-                'employee_name' => 'required|string',
-                'employee_code' => 'required|string',
-                'family_contact_number' => 'required|numeric',
-                'gender' => 'required',
-                'dob' => 'required|date',
-                'nationality' => 'required|string',
-                'address' => 'required|string',
-                'card_date_of_issue' => 'required|date',
-                'card_valid_till' => 'required|date',
-                'company_name.*' => 'required|string',
-                'company_employee_code.*' => 'required|string',
-            ]);
+            // unset($data['_token']);
+        // } else {
+        //     $request->validate([
+        //         'emp_name' => 'required|string',
+        //         'contact_number' => 'required|numeric',
+        //         'email' => 'required|email',
+        //         'employee_name' => 'required|string',
+        //         'employee_code' => 'required|string',
+        //         'family_contact_number' => 'required|numeric',
+        //         'gender' => 'required',
+        //         'dob' => 'required|date',
+        //         'nationality' => 'required|string',
+        //         'address' => 'required|string',
+        //         'card_date_of_issue' => 'required|date',
+        //         'card_valid_till' => 'required|date',
+        //         'company_name.*' => 'required|string',
+        //         'company_employee_code.*' => 'required|string',
+        //     ]);
 
-            $companyNames = $request->input('company_name');
-            $companyEmployeeCodes = $request->input('company_employee_code');
+        //     $companyNames = $request->input('company_name');
+        //     $companyEmployeeCodes = $request->input('company_employee_code');
 
-            $company_names = [];
-            foreach ($companyNames as $companyName) {
-                $company_names[] = $companyName;
-            }
+        //     $company_names = [];
+        //     foreach ($companyNames as $companyName) {
+        //         $company_names[] = $companyName;
+        //     }
 
-            $company_employee_codes = [];
-            foreach ($companyEmployeeCodes as $companyEmployeeCode) {
-                $company_employee_codes[] = $companyEmployeeCode;
-            }
+        //     $company_employee_codes = [];
+        //     foreach ($companyEmployeeCodes as $companyEmployeeCode) {
+        //         $company_employee_codes[] = $companyEmployeeCode;
+        //     }
 
-            $data = [
-                'emp_name'  =>  $request->emp_name,
-                'email' =>  $request->email,
-                'employee_name' => $request->employee_name,
-                'employee_code' => $request->employee_code,
-                'contact_number' => $request->contact_number,
-                'family_contact_number' => $request->family_contact_number,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
-                'nationality' => $request->nationality,
-                'address' => $request->address,
-                'card_date_of_issue' => $request->card_date_of_issue,
-                'card_valid_till' => $request->card_valid_till,
-                'is_deleted' => 0,
-                'company_name' => $company_names, // Store as JSON
-                'company_employee_code' => $company_employee_codes // Store as JSON
-            ];
+        //     $data = [
+        //         'emp_name'  =>  $request->emp_name,
+        //         'email' =>  $request->email,
+        //         'employee_name' => $request->employee_name,
+        //         'employee_code' => $request->employee_code,
+        //         'contact_number' => $request->contact_number,
+        //         'family_contact_number' => $request->family_contact_number,
+        //         'gender' => $request->gender,
+        //         'dob' => $request->dob,
+        //         'nationality' => $request->nationality,
+        //         'address' => $request->address,
+        //         'card_date_of_issue' => $request->card_date_of_issue,
+        //         'card_valid_till' => $request->card_valid_till,
+        //         'is_deleted' => 0,
+        //         'company_name' => $company_names, // Store as JSON
+        //         'company_employee_code' => $company_employee_codes // Store as JSON
+        //     ];
             
-            unset($data['_token']);
-        }
+        //     // unset($data['_token']);
+        // }
 
         try {
             $employee->update($data);
