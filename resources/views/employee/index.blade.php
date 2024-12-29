@@ -29,6 +29,27 @@
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('employee.create') }}"> Create New Employee</a>
             </div>
+
+            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#exampleModal">
+                Import Employees
+            </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="file">Choose Excel File</label>
+                        <input type="file" name="file" id="file" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </form>
+                </div>
+            </div>
         </div>
     </div>
 

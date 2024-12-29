@@ -3,6 +3,7 @@
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Logout;
 use App\Http\Controllers\Employee;
+use App\Http\Controllers\ExcelImportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
@@ -43,3 +44,5 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::resource('employee', Employee::class);
     Route::get('/employee/view/{emp_id}', [Employee::class, 'GetByEmpId'])->name('employee.GetByEmpId');
 });
+
+Route::post('/import-excel', [ExcelImportController::class, 'import'])->name('import');

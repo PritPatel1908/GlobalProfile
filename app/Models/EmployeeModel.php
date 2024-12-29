@@ -26,9 +26,9 @@ class EmployeeModel extends Model
         'address',
         'card_date_of_issue',
         'card_valid_till',
-        'is_deleted',
         'company_name',
         'company_employee_code',
+        'is_deleted',
     ];
 
     protected $casts = [
