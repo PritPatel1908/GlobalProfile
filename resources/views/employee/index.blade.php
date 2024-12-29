@@ -30,13 +30,13 @@
                 <a class="btn btn-success" href="{{ route('employee.create') }}"> Create New Employee</a>
             </div>
 
-            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#exampleModal">
+            <!-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#exampleModal">
                 Import Employees
-            </button>
+            </button> -->
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
