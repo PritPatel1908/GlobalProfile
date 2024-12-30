@@ -30,28 +30,30 @@
                 <a class="btn btn-success" href="{{ route('employee.create') }}"> Create New Employee</a>
             </div>
 
-            <!-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" data-toggle="modal"
+                data-target="#exampleModal">
                 Import Employees
-            </button> -->
+            </button>
         </div>
     </div>
 
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="file">Choose Excel File</label>
-                        <input type="file" name="file" id="file" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Import</button>
-                </form>
+                    <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="file">Choose Excel File</label>
+                            <input type="file" name="file" id="file" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -121,11 +123,12 @@
 
                     <!-- TODO: Remove comment after add qucode -->
                     <!-- <td>
-                        <?php
-                        //$qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
-                        ?>
-                        <img src="<?php //echo $qrcode; ?>">
-                    </td> -->
+                                                                <?php
+                                                                //$qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
+                                                                ?>
+                                                                <img src="<?php //echo $qrcode;
+                                                                ?>">
+                                                            </td> -->
 
                     <td>{{ $employee->emp_id }}</td>
 
@@ -139,21 +142,21 @@
 
                     <td>{{ $employee->contact_number }}</td>
 
-                    @if ($employee->company_name !== null && count($employee->company_name) > 1) 
-                        <td>
-                            {{ implode(', ', $employee->company_name) }}
-                        </td>
-                    @else
+                    {{-- @if ($employee->company_name !== null && count($employee->company_name) > 1) --}}
+                    <td>
+                        {{ implode(', ', $employee->company_name) }}
+                    </td>
+                    {{-- @else
                         <td>{{ $employee->company_name }}</td>
-                    @endif
+                    @endif --}}
 
-                    @if ($employee->company_employee_code !== null && count($employee->company_employee_code) > 1) 
-                        <td>
-                            {{ implode(', ', $employee->company_employee_code) }}
-                        </td>
-                    @else
+                    {{-- @if ($employee->company_employee_code !== null && count($employee->company_employee_code) > 1) --}}
+                    <td>
+                        {{ implode(', ', $employee->company_employee_code) }}
+                    </td>
+                    {{-- @else
                         <td>{{ $employee->company_employee_code }}</td>
-                    @endif
+                    @endif --}}
 
                     <td>{{ $employee->family_contact_number }}</td>
 

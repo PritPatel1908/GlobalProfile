@@ -34,6 +34,9 @@ class EmployeeModel extends Model
     protected $casts = [
         'company_name' => 'json',
         'company_employee_code' => 'json',
+        'dob' => 'date',
+        'card_date_of_issue' => 'date',
+        'card_valid_till' => 'date',
     ];
 
     public function scopeActive($query)
