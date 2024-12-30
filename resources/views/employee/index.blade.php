@@ -123,12 +123,12 @@
 
                     <!-- TODO: Remove comment after add qucode -->
                     <!-- <td>
-                                                                <?php
-                                                                //$qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
-                                                                ?>
-                                                                <img src="<?php //echo $qrcode;
-                                                                ?>">
-                                                            </td> -->
+                                                                            <?php
+                                                                            //$qrcode = asset($EMP_QR_UPLOAD_PATH . $employee->qr_code_path);
+                                                                            ?>
+                                                                            <img src="<?php //echo $qrcode;
+                                                                            ?>">
+                                                                        </td> -->
 
                     <td>{{ $employee->emp_id }}</td>
 

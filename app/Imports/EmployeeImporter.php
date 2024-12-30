@@ -39,8 +39,8 @@ class EmployeeImporter implements ToCollection, ToModel
                 $employee->address = $row[11];
                 $employee->card_date_of_issue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('Y-m-d');
                 $employee->card_valid_till = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[13])->format('Y-m-d');
-                $employee->company_name = explode(',', $row[14]);
-                $employee->company_employee_code = explode(',', $row[15]);
+                $employee->company_name = explode(', ', $row[14]);
+                $employee->company_employee_code = explode(', ', $row[15]);
                 $employee->is_deleted = $row[16];
                 $employee->save();
             } else {
